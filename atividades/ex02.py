@@ -1,6 +1,22 @@
 def descendentes(arvore):
-    filhos = arvore[1]
-    return filhos + [d for filho in filhos for d in descendentes(filho)]
+    if not arvore[1]:
+        return []
+    
+    return [filho[0] for filho in arvore[1]] + \
+           [n for filho in arvore[1] for n in descendentes(filho)]
 
-exemplo = ["A", [["B", []], ["C", [["D", []]]]]]
-print(f"Descendentes: {descendentes(exemplo)}")
+def descendentes_compreensao(arvore):
+    return [
+        pessoa
+        for filho in arvore[1]
+        for pessoa in [filho[0]] + descendentes(filho)
+    ]
+
+familia = ["Avô", [
+    ["Pai", [
+        ["Neto", []]
+    ]],
+    ["Tio", []]
+    ]]
+
+print(descendentes_compreensao(familia))
